@@ -30,4 +30,7 @@
     <string name="notification_title">Audio Quick Play</string>
     <string name="notification_playing">Đang phát</string>
     <string name="notification_paused">Tạm dừng</string>
+    <string name="repeat_mode_off">Repeat Mode: OFF (Không lặp)</string>
+    <string name="repeat_mode_one">Repeat Mode: ONE (Lặp 1 lần)</string>
+    <string name="repeat_mode_all">Repeat Mode: ALL (Lặp toàn bộ)</string>
 </resources>

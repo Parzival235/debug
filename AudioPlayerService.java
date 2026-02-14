@@ -19,6 +19,7 @@ public class AudioPlayerService extends Service {
     public static final String ACTION_PLAY = "com.example.audioquickplay.ACTION_PLAY";
     public static final String ACTION_PAUSE = "com.example.audioquickplay.ACTION_PAUSE";
     public static final String ACTION_TOGGLE = "com.example.audioquickplay.ACTION_TOGGLE";
+    public static final String ACTION_SEEK = "com.example.audioquickplay.ACTION_SEEK";
     public static final String ACTION_STATE = "com.example.audioquickplay.ACTION_STATE_CHANGED";
 
     public static boolean isPlaying = false;
@@ -48,6 +49,9 @@ public class AudioPlayerService extends Service {
                 break;
             case ACTION_TOGGLE:
                 if (isPlaying) handlePause(); else handlePlay();
+                break;
+            case ACTION_SEEK:
+                handleSeek(intent.getIntExtra("progress", 0));
                 break;
         }
 
@@ -97,6 +101,14 @@ public class AudioPlayerService extends Service {
             isPlaying = false;
             updateNotification(false);
             sendStateBroadcast(false);
+        }
+    }
+
+    private void handleSeek(int progress) {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            int duration = mediaPlayer.getDuration();
+            int targetPos = (int) (duration * progress / 100.0);
+            mediaPlayer.seekTo(targetPos);
         }
     }
 

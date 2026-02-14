@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Landscape layout for MainActivity -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -17,13 +18,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="16dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
+                app:cardCornerRadius="12dp"
                 app:cardElevation="8dp"
                 app:strokeWidth="1dp"
                 app:strokeColor="?attr/colorOutline">
@@ -32,7 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="24dp">
+                    android:padding="16dp">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="match_parent"
@@ -40,27 +41,42 @@
                         android:text="@string/label_choose_audio"
                         style="@style/TextAppearance.Material3.HeadlineSmall"
                         android:textColor="?attr/colorOnSurface"
-                        android:layout_marginBottom="24dp" />
+                        android:layout_marginBottom="16dp" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_pick_audio"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/btn_pick_audio"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_marginBottom="16dp" />
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="12dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_pick_audio"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/btn_pick_audio"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_marginEnd="8dp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_play"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/btn_play"
+                            style="@style/Widget.Material3.Button" />
+                    </LinearLayout>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tv_selected_file"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/label_no_file"
-                        style="@style/TextAppearance.Material3.BodyMedium"
+                        style="@style/TextAppearance.Material3.BodySmall"
                         android:textColor="?attr/colorPrimary"
-                        android:layout_marginBottom="24dp"
+                        android:layout_marginBottom="12dp"
                         android:gravity="center" />
 
-                    <!-- Playback Time Display -->
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tv_playback_time"
                         android:layout_width="match_parent"
@@ -69,30 +85,18 @@
                         style="@style/TextAppearance.Material3.LabelSmall"
                         android:textColor="?attr/colorOnSurfaceVariant"
                         android:gravity="center"
-                        android:layout_marginBottom="8dp" />
+                        android:layout_marginBottom="4dp" />
 
-                    <!-- Progress Seek Bar -->
                     <SeekBar
                         android:id="@+id/seekbar_progress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp" />
+                        android:layout_marginBottom="12dp" />
 
-                    <!-- Play Button -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_play"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/btn_play"
-                        style="@style/Widget.Material3.Button"
-                        android:layout_marginBottom="8dp" />
-
-                    <!-- Control Buttons Row -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginBottom="8dp"
                         android:gravity="center">
 
                         <com.google.android.material.button.MaterialButton
@@ -104,15 +108,14 @@
                             style="@style/Widget.Material3.Button.OutlinedButton"
                             android:layout_marginEnd="8dp" />
 
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_logout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/action_logout"
+                            style="@style/Widget.Material3.Button.TonalButton" />
                     </LinearLayout>
-
-                    <!-- Logout Button -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_logout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/action_logout"
-                        style="@style/Widget.Material3.Button.TonalButton" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -122,7 +125,7 @@
                 android:text="@string/label_quick_tile_hint"
                 style="@style/TextAppearance.Material3.LabelSmall"
                 android:textColor="?attr/colorOnSurfaceVariant"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="24dp"
                 android:gravity="center" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
