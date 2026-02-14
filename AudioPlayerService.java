@@ -59,7 +59,7 @@ public class AudioPlayerService extends Service {
             SharedPreferences prefs = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
             String uriString = prefs.getString("audio_uri", null);
             if (uriString == null) {
-                Toast.makeText(this, "Chưa chọn file!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.msg_no_file_selected, Toast.LENGTH_SHORT).show();
                 return;
             }
             Uri uri = Uri.parse(uriString);
@@ -71,7 +71,7 @@ public class AudioPlayerService extends Service {
 
             mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
             if (mediaPlayer == null) {
-                Toast.makeText(this, "Không thể tạo MediaPlayer", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.msg_no_selection, Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -87,7 +87,7 @@ public class AudioPlayerService extends Service {
             startForeground(NOTIF_ID, buildNotification(true));
             sendStateBroadcast(true);
         } catch (Exception e) {
-            Toast.makeText(this, "Lỗi phát: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.msg_playback_error, e.getMessage()), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -126,10 +126,10 @@ public class AudioPlayerService extends Service {
             builder = new Notification.Builder(this);
         }
 
-        builder.setContentTitle("Audio Quick Play")
-                .setContentText(playing ? "Đang phát" : "Tạm dừng")
+        builder.setContentTitle(getString(R.string.notification_title))
+                .setContentText(playing ? getString(R.string.notification_playing) : getString(R.string.notification_paused))
                 .setSmallIcon(R.drawable.ic_play)
-                .addAction(0, playing ? "Tạm dừng" : "Phát", pi)
+                .addAction(0, playing ? getString(R.string.action_pause) : getString(R.string.action_play), pi)
                 .setOngoing(playing)
                 .setOnlyAlertOnce(true);
 

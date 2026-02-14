@@ -1,0 +1,38 @@
+# Gradle
+.gradle/
+build/
+.gradle
+*.gradle
+
+# Android Studio
+.idea/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+
+# Build outputs
+app/build/
+*.apk
+*.aar
+*.zip
+
+# Local properties
+local.properties
+
+# Keystore
+*.jks
+*.keystore
+
+# ProGuard
+*.pro
+
+# IDE
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

@@ -44,16 +44,16 @@ public class LoginActivity extends AppCompatActivity {
                 String password = etPassword.getText().toString().trim();
 
                 if (username.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Nhập đầy đủ!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, R.string.msg_login_failed, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 // Basic validation
                 if (username.length() < 3) {
-                    etUsername.setError("Tên đăng nhập quá ngắn");
+                    etUsername.setError(getString(R.string.msg_username_short));
                     return;
                 }
                 if (password.length() < 4) {
-                    etPassword.setError("Mật khẩu quá ngắn");
+                    etPassword.setError(getString(R.string.msg_password_short));
                     return;
                 }
 
@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                         .putBoolean(KEY_IS_LOGGED_IN, true)
                         .apply();
 
-                Toast.makeText(LoginActivity.this, "Đăng nhập OK!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, R.string.msg_login_success, Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             }

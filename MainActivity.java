@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
             uri -> {
                 if (uri != null) {
                     selectedUri = uri;
-                    tvSelectedFile.setText("Đã chọn: " + uri.getLastPathSegment());
+                    tvSelectedFile.setText(getString(R.string.label_selected, uri.getLastPathSegment()));
                     prefs.edit().putString("audio_uri", uri.toString()).apply();
-                    Toast.makeText(this, "File sẵn sàng!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.msg_file_ready, Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         String uriString = prefs.getString("audio_uri", null);
         if (uriString != null) {
             selectedUri = Uri.parse(uriString);
-            tvSelectedFile.setText("Đã chọn: " + selectedUri.getLastPathSegment());
+            tvSelectedFile.setText(getString(R.string.label_selected, selectedUri.getLastPathSegment()));
         }
 
         btnPickAudio.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (selectedUri == null) {
-                    Toast.makeText(MainActivity.this, "Chọn file trước!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.msg_pick_file_first, Toast.LENGTH_SHORT).show();
                     return;
                 }
 

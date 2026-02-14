@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Audio Quick Play</string>
+    <string name="action_play">Phát</string>
+    <string name="action_pause">Tạm dừng</string>
+    <string name="action_logout">Đăng xuất</string>
+    <string name="hint_username">Tên đăng nhập</string>
+    <string name="hint_password">Mật khẩu</string>
+    <string name="btn_login">Đăng nhập</string>
+    <string name="btn_play">Phát ngay</string>
+    <string name="btn_pick_audio">Chọn file từ bộ nhớ</string>
+    <string name="msg_login_success">Đăng nhập OK!</string>
+    <string name="msg_login_failed">Nhập đầy đủ!</string>
+    <string name="msg_username_short">Tên đăng nhập quá ngắn</string>
+    <string name="msg_password_short">Mật khẩu quá ngắn</string>
+    <string name="msg_file_ready">File sẵn sàng!</string>
+    <string name="msg_no_file_selected">Chưa chọn file!</string>
+    <string name="msg_pick_file_first">Chọn file trước!</string>
+    <string name="msg_playing">Đang phát...</string>
+    <string name="msg_paused">Tạm dừng</string>
+    <string name="msg_completed">Hoàn tất</string>
+    <string name="msg_no_selection">Không thể tạo MediaPlayer</string>
+    <string name="msg_playback_error">Lỗi phát: %s</string>
+    <string name="label_no_file">Chưa chọn file</string>
+    <string name="label_selected">Đã chọn: %s</string>
+    <string name="label_choose_audio">Chọn file âm thanh</string>
+    <string name="label_quick_tile_hint">Add tile vào Quick Settings để phát nhanh nhé!</string>
+    <string name="label_audio_tile">Phát Âm Thanh</string>
+    <string name="label_quick_settings">Audio Player</string>
+    <string name="notification_title">Audio Quick Play</string>
+    <string name="notification_playing">Đang phát</string>
+    <string name="notification_paused">Tạm dừng</string>
+</resources>
