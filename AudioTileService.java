@@ -22,13 +22,16 @@ public class AudioTileService extends TileService {
         super.onClick();
 
         Tile tile = getQsTile();
-        if (mediaPlayer == null || !mediaPlayer.isPlaying()) {
-            playAudio();
+        Intent svcIntent = new Intent(this, AudioPlayerService.class);
+        if (!AudioPlayerService.isPlaying) {
+            svcIntent.setAction(AudioPlayerService.ACTION_PLAY);
+            startService(svcIntent);
             tile.setState(Tile.STATE_ACTIVE);
             tile.setLabel("Đang phát");
             Toast.makeText(this, "Phát âm thanh", Toast.LENGTH_SHORT).show();
         } else {
-            mediaPlayer.pause();
+            svcIntent.setAction(AudioPlayerService.ACTION_PAUSE);
+            startService(svcIntent);
             tile.setState(Tile.STATE_INACTIVE);
             tile.setLabel("Phát âm thanh");
             Toast.makeText(this, "Tạm dừng", Toast.LENGTH_SHORT).show();
@@ -37,22 +40,10 @@ public class AudioTileService extends TileService {
     }
 
     private void playAudio() {
-        try {
-            SharedPreferences prefs = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
-            String uriString = prefs.getString("audio_uri", null);
-            if (uriString == null) {
-                Toast.makeText(this, "Chưa chọn file!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            Uri uri = Uri.parse(uriString);
-            if (mediaPlayer == null) {
-                mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
-            }
-            mediaPlayer.start();
-        } catch (Exception e) {
-            Toast.makeText(this, "Lỗi: " + e.getMessage(), Toast.LENGTH_LONG).show();
-        }
+        // Deprecated: kept for compatibility but prefer AudioPlayerService
+        Intent svcIntent = new Intent(this, AudioPlayerService.class);
+        svcIntent.setAction(AudioPlayerService.ACTION_PLAY);
+        startService(svcIntent);
     }
 
     private void updateTile() {

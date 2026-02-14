@@ -19,7 +19,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "app_prefs";
     public static final String KEY_IS_LOGGED_IN = "is_logged_in";
     public static final String KEY_USERNAME = "username";
-    public static final String KEY_PASSWORD = "password";
+    public static final String KEY_PASSWORD = "password"; // kept for compatibility but no longer stored
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +47,19 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Nhập đầy đủ!", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                // Basic validation
+                if (username.length() < 3) {
+                    etUsername.setError("Tên đăng nhập quá ngắn");
+                    return;
+                }
+                if (password.length() < 4) {
+                    etPassword.setError("Mật khẩu quá ngắn");
+                    return;
+                }
 
+                // Do NOT store raw password. Store only username and login flag.
                 prefs.edit()
                         .putString(KEY_USERNAME, username)
-                        .putString(KEY_PASSWORD, password)
                         .putBoolean(KEY_IS_LOGGED_IN, true)
                         .apply();
 

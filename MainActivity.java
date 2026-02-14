@@ -1,7 +1,10 @@
 package com.example.audioquickplay;
 
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.content.Intent;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -16,8 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
     private MaterialTextView tvSelectedFile;
     private MaterialButton btnPickAudio, btnPlay;
+    private MaterialButton btnLogout;
     private Uri selectedUri;
-    private MediaPlayer mediaPlayer;
     private SharedPreferences prefs;
 
     private final ActivityResultLauncher<String> pickAudioLauncher = registerForActivityResult(
@@ -31,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+    private BroadcastReceiver stateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent == null) return;
+            boolean playing = intent.getBooleanExtra("is_playing", false);
+            btnPlay.setText(playing ? "Tạm dừng" : "Phát ngay");
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         tvSelectedFile = findViewById(R.id.tv_selected_file);
         btnPickAudio = findViewById(R.id.btn_pick_audio);
         btnPlay = findViewById(R.id.btn_play);
+        btnLogout = findViewById(R.id.btn_logout);
 
         prefs = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
 
@@ -58,33 +71,44 @@ public class MainActivity extends AppCompatActivity {
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (selectedUri != null) {
-                    playAudio(selectedUri);
-                } else {
+                if (selectedUri == null) {
                     Toast.makeText(MainActivity.this, "Chọn file trước!", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+
+                Intent i = new Intent(MainActivity.this, AudioPlayerService.class);
+                i.setAction(AudioPlayerService.ACTION_TOGGLE);
+                startService(i);
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prefs.edit().putBoolean(LoginActivity.KEY_IS_LOGGED_IN, false).apply();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                finish();
             }
         });
     }
 
-    private void playAudio(Uri uri) {
+    @Override
+    protected void onDestroy() {
+        // Unregister receiver
         try {
-            if (mediaPlayer != null) {
-                mediaPlayer.release();
-            }
-            mediaPlayer = MediaPlayer.create(this, uri);
-            mediaPlayer.start();
-            Toast.makeText(this, "Đang phát...", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(this, "Lỗi phát: " + e.getMessage(), Toast.LENGTH_LONG).show();
-        }
+            unregisterReceiver(stateReceiver);
+        } catch (Exception ignored) {}
+
+        super.onDestroy();
     }
 
     @Override
-    protected void onDestroy() {
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-        }
-        super.onDestroy();
+    protected void onResume() {
+        super.onResume();
+        // register receiver to update button state
+        IntentFilter f = new IntentFilter(AudioPlayerService.ACTION_STATE);
+        registerReceiver(stateReceiver, f);
+        // set initial button text
+        btnPlay.setText(AudioPlayerService.isPlaying ? "Tạm dừng" : "Phát ngay");
     }
 }
