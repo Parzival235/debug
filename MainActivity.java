@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent == null) return;
             boolean playing = intent.getBooleanExtra("is_playing", false);
-            btnPlay.setText(playing ? "Tạm dừng" : "Phát ngay");
+            btnPlay.setText(playing ? getString(R.string.action_pause) : getString(R.string.btn_play));
         }
     };
 
@@ -94,11 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        // Unregister receiver
-        try {
-            unregisterReceiver(stateReceiver);
-        } catch (Exception ignored) {}
-
         super.onDestroy();
     }
 
@@ -107,8 +102,16 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         // register receiver to update button state
         IntentFilter f = new IntentFilter(AudioPlayerService.ACTION_STATE);
-        registerReceiver(stateReceiver, f);
+        registerReceiver(stateReceiver, f, Context.RECEIVER_EXPORTED);
         // set initial button text
-        btnPlay.setText(AudioPlayerService.isPlaying ? "Tạm dừng" : "Phát ngay");
+        btnPlay.setText(AudioPlayerService.isPlaying ? getString(R.string.action_pause) : getString(R.string.btn_play));
+    }
+
+    @Override
+    protected void onPause() {
+        try {
+            unregisterReceiver(stateReceiver);
+        } catch (Exception ignored) {}
+        super.onPause();
     }
 }
